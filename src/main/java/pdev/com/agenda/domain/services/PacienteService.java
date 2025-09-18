@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import pdev.com.agenda.domain.entities.Paciente;
 import pdev.com.agenda.domain.repositories.PacienteRepository;
+import pdev.com.agenda.exceptions.BusinessException;
 
 @Service
 @Transactional
@@ -17,6 +18,15 @@ public class PacienteService {
     private final PacienteRepository pacienteRepository;
 
     public Paciente save(Paciente paciente) {
+        var responseCpf = pacienteRepository.findByCpf(paciente.getCpf());
+        var responseEmail = pacienteRepository.findByEmail(paciente.getEmail());
+
+        if (responseCpf.isPresent() && !responseCpf.get().getId().equals(paciente.getId()))
+            throw new BusinessException("Cpf já cadastrado");
+
+        if (responseEmail.isPresent() && !responseEmail.get().getId().equals(paciente.getId()))
+            throw new BusinessException("E-mail já cadastrado");
+
         pacienteRepository.save(paciente);
 
         return paciente;
