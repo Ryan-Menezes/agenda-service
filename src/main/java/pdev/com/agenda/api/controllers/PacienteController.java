@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import pdev.com.agenda.api.mappers.PacienteMapper;
 import pdev.com.agenda.api.requests.PacienteRequest;
@@ -27,7 +28,7 @@ public class PacienteController {
     private final PacienteMapper mapper;
 
     @PostMapping
-    public ResponseEntity<PacienteResponse> save(@RequestBody PacienteRequest request) {
+    public ResponseEntity<PacienteResponse> save(@Valid @RequestBody PacienteRequest request) {
         var paciente = pacienteService.save(mapper.toPaciente(request));
         var response = mapper.toPacienteResponse(paciente);
 
@@ -55,9 +56,9 @@ public class PacienteController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping
-    public ResponseEntity<PacienteResponse> update(@RequestBody PacienteRequest request) {
-        var paciente = pacienteService.save(mapper.toPaciente(request));
+    @PutMapping("/{id}")
+    public ResponseEntity<PacienteResponse> update(@PathVariable Long id, @Valid @RequestBody PacienteRequest request) {
+        var paciente = pacienteService.update(id, mapper.toPaciente(request));
         var response = mapper.toPacienteResponse(paciente);
 
         return ResponseEntity.ok(response);

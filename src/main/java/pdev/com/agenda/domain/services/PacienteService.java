@@ -32,6 +32,17 @@ public class PacienteService {
         return paciente;
     }
 
+    public Paciente update(Long id, Paciente paciente) {
+        var result = findById(id);
+
+        if (result.isEmpty())
+            throw new BusinessException("Paciente não encontrado");
+
+        paciente.setId(id);
+
+        return save(paciente);
+    }
+
     public List<Paciente> findAll() {
         return pacienteRepository.findAll();
     }
