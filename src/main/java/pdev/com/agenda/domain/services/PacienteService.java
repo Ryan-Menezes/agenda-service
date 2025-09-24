@@ -17,6 +17,14 @@ import pdev.com.agenda.exceptions.BusinessException;
 public class PacienteService {
     private final PacienteRepository pacienteRepository;
 
+    public List<Paciente> findAll() {
+        return pacienteRepository.findAll();
+    }
+
+    public Optional<Paciente> findById(Long id) {
+        return pacienteRepository.findById(id);
+    }
+
     public Paciente save(Paciente paciente) {
         var responseCpf = pacienteRepository.findByCpf(paciente.getCpf());
         var responseEmail = pacienteRepository.findByEmail(paciente.getEmail());
@@ -41,14 +49,6 @@ public class PacienteService {
         paciente.setId(id);
 
         return save(paciente);
-    }
-
-    public List<Paciente> findAll() {
-        return pacienteRepository.findAll();
-    }
-
-    public Optional<Paciente> findById(Long id) {
-        return pacienteRepository.findById(id);
     }
 
     public void delete(Long id) {
