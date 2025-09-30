@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import pdev.com.agenda.api.mappers.AgendaMapper;
@@ -23,6 +24,7 @@ import pdev.com.agenda.domain.services.AgendaService;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/agendas")
+@Tag(name = "Agendas", description = "Operações relacionadas as agendas")
 public class AgendaController {
     private final AgendaService agendaService;
     private final AgendaMapper mapper;
