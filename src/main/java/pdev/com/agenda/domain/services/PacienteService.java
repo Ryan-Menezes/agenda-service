@@ -35,9 +35,7 @@ public class PacienteService {
         if (responseEmail.isPresent() && !responseEmail.get().getId().equals(paciente.getId()))
             throw new BusinessException("E-mail já cadastrado");
 
-        pacienteRepository.save(paciente);
-
-        return paciente;
+        return pacienteRepository.save(paciente);
     }
 
     public Paciente update(Long id, Paciente paciente) {
